@@ -17,7 +17,7 @@ public enum MatchStatus {
 
     public static MatchStatus getEnumFromString(String stringValue) {
         for (MatchStatus matchStatus : MatchStatus.values()) {
-            if (matchStatus.getValue() == stringValue) {
+            if (matchStatus.getValue().equals(stringValue)) {
                 return matchStatus;
             }
         }

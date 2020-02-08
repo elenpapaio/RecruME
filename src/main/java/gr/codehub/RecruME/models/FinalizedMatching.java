@@ -13,7 +13,7 @@ public enum FinalizedMatching {
     }
     public static FinalizedMatching getEnumFromString(String stringValue) {
         for (FinalizedMatching finalizedMatching : FinalizedMatching.values()) {
-            if (finalizedMatching.getText() == stringValue) {
+            if (finalizedMatching.getText().equals(stringValue)) {
                 return finalizedMatching;
             }
         }

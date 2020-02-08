@@ -2,6 +2,7 @@ package gr.codehub.RecruME.services;
 
 import gr.codehub.RecruME.dtos.ApplicantDto;
 import gr.codehub.RecruME.models.Applicant;
+import gr.codehub.RecruME.models.EducationLevel;
 import gr.codehub.RecruME.models.Skill;
 import gr.codehub.RecruME.models.SkillLevel;
 import gr.codehub.RecruME.repositories.ApplicantRepo;
@@ -25,7 +26,7 @@ public class ApplicantService {
         applicant.setLastName(applicantDto.getLastName());
         applicant.setAddress(applicantDto.getAddress());
         applicant.setRegion(applicantDto.getRegion());
-        applicant.setEducationLevel(applicantDto.getEducationLevel());
+        applicant.setEducationLevel(EducationLevel.getEnumFromString(applicantDto.getEducationLevel()));
         applicant.setDob(new Date(applicantDto.getYearBirth(), applicantDto.getMonthBirth()-1, applicantDto.getDayBirth()+1));
 
         for (Skill s: applicantDto.getSkills()){

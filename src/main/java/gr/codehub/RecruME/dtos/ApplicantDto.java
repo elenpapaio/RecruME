@@ -16,7 +16,7 @@ public class ApplicantDto {
     private String lastName;
     private String address;
     private String region;
-    private EducationLevel educationLevel;
+    private String educationLevel;
     private int yearBirth;
     private int monthBirth;
     private int dayBirth;

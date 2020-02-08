@@ -15,9 +15,9 @@ public enum EducationLevel {
         return stringValue;
     }
 
-    public static EducationLevel getEducationLevelFromString(String stringValue) {
+    public static EducationLevel getEnumFromString(String stringValue) {
         for (EducationLevel educationLevel : EducationLevel.values()) {
-            if (educationLevel.getValue() == stringValue) {
+            if (educationLevel.getValue().equals(stringValue)) {
                 return educationLevel;
             }
         }

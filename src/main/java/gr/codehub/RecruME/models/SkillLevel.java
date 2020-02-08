@@ -17,7 +17,7 @@ public enum SkillLevel {
 
     public static SkillLevel getEnumFromString(String stringValue) {
         for (SkillLevel skillLevel : SkillLevel.values()) {
-            if (skillLevel.getValue() == stringValue) {
+            if (skillLevel.getValue().equals(stringValue)) {
                 return skillLevel;
             }
         }
