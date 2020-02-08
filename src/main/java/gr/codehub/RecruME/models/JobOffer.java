@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -23,4 +23,12 @@ public class JobOffer {
     private String region;
     private EducationLevel educationLevel;
     private Date postDate;
+    @NotEmpty
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "job_skill",
+            joinColumns = {
+                    @JoinColumn(name = "job_id")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "skill_id")})
+    private Set<Skill> jobSkillSet = new HashSet<Skill>();
 }
