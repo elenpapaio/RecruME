@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("recrume/")
 public class JobOfferController {
     @Autowired
     private JobOfferService jobOfferService;

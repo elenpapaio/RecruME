@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("recrume/")
 public class ApplicantController {
     @Autowired
     private ApplicantService applicantService;
@@ -20,7 +21,7 @@ public class ApplicantController {
 
     @PostMapping("applicant")
     public Applicant newApplicant(@RequestBody ApplicantDto applicantDto){
-
+        return applicantService.save(applicantDto);
     }
 
     @GetMapping("applicant/lastname/{lastname}/firstname/{firstname}")
