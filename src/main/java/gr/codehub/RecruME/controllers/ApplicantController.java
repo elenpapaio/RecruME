@@ -16,7 +16,7 @@ public class ApplicantController {
 
     @GetMapping("applicants/import")
     public List<Applicant> loadApplicants(){
-
+        return null;
     }
 
     @PostMapping("applicant")
@@ -26,29 +26,29 @@ public class ApplicantController {
 
     @GetMapping("applicant/lastname/{lastname}/firstname/{firstname}")
     public List<Applicant> getApplicantsByName(@PathVariable String lastname,@PathVariable String firstname){
-
+        return null;
     }
     @GetMapping("applicant/{id}")
     public Applicant getApplicantById(@PathVariable int id){
-
+        return null;
     }
     @GetMapping("applicants/region/{region}")
     public List<Applicant> getApplicantsByRegion(@PathVariable String region){
-
+        return null;
     }
 
     @GetMapping("applicants/DateFrom/{yearFrom}/DateTo/{yearTo}")
     public List<Applicant> getApplicantsByDate(@PathVariable int yearFrom, @PathVariable int YearTo){
-
+        return null;
     }
 
     @GetMapping("applicants/skill/{skill_Id}")
     public List<Applicant> getApplicantsBySkill(@PathVariable int skill_id){
-
+        return null;
     }
 
     @GetMapping("applicants/report/week")
     public List<Applicant> saveApplicants(){
-
+        return null;
     }
 }
