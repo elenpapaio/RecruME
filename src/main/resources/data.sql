@@ -1,0 +1,6 @@
+insert into skill (skill_name, skill_level) values('creativity', 0)
+insert into skill (skill_name, skill_level) values('creativity', 1)
+insert into skill (skill_name, skill_level) values('creativity', 2)
+insert into skill (skill_name, skill_level) values('java', 0)
+insert into skill (skill_name, skill_level) values('java', 1)
+insert into skill (skill_name, skill_level) values('java', 2)

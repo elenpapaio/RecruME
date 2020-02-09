@@ -28,7 +28,6 @@ public class Applicant {
     private String region;
     private EducationLevel educationLevel;
     private Date dob;
-
     @NotEmpty
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "applicant_skill",
