@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("recrume/")
 public class MatchingController {
     @Autowired
     private MatchingService matchingService;

@@ -17,7 +17,7 @@ public class ApplicantController {
 
     @GetMapping("applicants/import")
     public List<Applicant> loadApplicants(){
-
+        return null;
     }
 
     @PostMapping("applicant")
@@ -50,6 +50,6 @@ public class ApplicantController {
 
     @GetMapping("applicants/report/week")
     public List<Applicant> saveApplicants(){
-
+        return  null;
     }
 }

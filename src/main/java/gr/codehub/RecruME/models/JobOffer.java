@@ -21,6 +21,7 @@ public class JobOffer {
     private String region;
     private EducationLevel educationLevel;
     private Date postDate;
+    private SkillLevel skillLevel;
     @NotEmpty
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "job_skill",

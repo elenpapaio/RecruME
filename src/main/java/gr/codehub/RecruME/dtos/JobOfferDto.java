@@ -21,6 +21,7 @@ public class JobOfferDto {
     private int postYear;
     private int postMonth;
     private int postDay;
+    private String skillLevel;
     private List<Skill> skills;
 
 }

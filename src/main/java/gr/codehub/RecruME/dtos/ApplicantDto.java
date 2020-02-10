@@ -2,6 +2,7 @@ package gr.codehub.RecruME.dtos;
 
 import gr.codehub.RecruME.models.EducationLevel;
 import gr.codehub.RecruME.models.Skill;
+import gr.codehub.RecruME.models.SkillLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -20,6 +21,7 @@ public class ApplicantDto {
     private int yearBirth;
     private int monthBirth;
     private int dayBirth;
+    private String skillLevel;
     private List<Skill> skills;
 
     public ApplicantDto(){

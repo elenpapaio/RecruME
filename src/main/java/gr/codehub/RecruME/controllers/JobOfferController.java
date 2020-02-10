@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("recrume/")
@@ -17,7 +18,7 @@ public class JobOfferController {
 
     @GetMapping("jobOffer/import")
     public List<JobOffer> loadJobOffers(){
-
+        return null;
     }
 
     @PostMapping("jobOffer")
@@ -42,12 +43,12 @@ public class JobOfferController {
     }
 
     @GetMapping("jobOffers/skill/{skill_id}")
-    private List<JobOffer> getJobOffersBySkill(@PathVariable int skill_id){
-        return jobOfferService.getJobOfferBySkill(skill_id);
+    public List<JobOffer> getJobOffersBySkill(@PathVariable int skill_id){
+        return jobOfferService.getJobOffersBySkill(skill_id);
     }
 
     @GetMapping("jobOffers/report/week")
     public List<JobOffer> saveJobOffers(){
-
+        return null;
     }
 }

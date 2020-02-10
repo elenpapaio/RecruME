@@ -17,7 +17,7 @@ public class SkillController {
 
     @GetMapping("skills/import")
     public List<Skill> loadSkills(){
-
+        return  null;
     }
 
     @PostMapping("skill")
@@ -32,26 +32,26 @@ public class SkillController {
 
     @DeleteMapping("skill/{id}")
     public String deleteSkillById(@PathVariable int id){
-
+        return skillService.deleteSkill(id);
     }
 
     @GetMapping("skills/mostRequired/20")
     public List<Skill> getMostRequiredSkills20(){
-
+        return null;
     }
 
     @GetMapping("skills/mostOffered/20")
     public List<Skill> getMostOfferedSkills20(){
-
+        return null;
     }
 
     @GetMapping("skills/requested/unmatched")
     public List<Skill> getUnmatchedSkills(){
-
+        return null;
     }
 
     @GetMapping("skills/report/week")
     public List<Skill> saveSkills(){
-
+        return null;
     }
 }
