@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -42,5 +45,34 @@ public class ApplicantService {
                 .filter(skill -> skill.getSkillName().equals(name) && skill.getSkillLevel() == level)
                 .findFirst()
                 .get();
+    }
+
+    public List<Applicant> getApplicantsByName(String lastname, String firstname) {
+
+    }
+
+    public Optional<Applicant> getApplicantById(int id) {
+        return applicantRepo.findById(id);
+    }
+
+    public List<Applicant> getApplicantsByRegion(String region) {
+        return StreamSupport
+                .stream(applicantRepo.findAll().spliterator(),false)
+                .filter(applicant -> applicant.getRegion().equals(region))
+                .collect(Collectors.toList());
+    }
+
+    public List<Applicant> getApplicantsBySkill(int skill_id) {
+        StreamSupport
+                .stream(skillRepo.findAll().spliterator(),false)
+                .filter()
+    }
+
+    public List<Applicant> getApplicantsByDate(int yearFrom, int yearTo) {
+        return StreamSupport
+                .stream(applicantRepo.findAll().spliterator(),false)
+                .filter(applicant -> applicant.getDob().getYear()>=yearFrom)
+                .filter(applicant -> applicant.getDob().getYear()<=yearTo).
+                        collect(Collectors.toList());
     }
 }

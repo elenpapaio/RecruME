@@ -1,5 +1,6 @@
 package gr.codehub.RecruME.controllers;
 
+import gr.codehub.RecruME.dtos.SkillDto;
 import gr.codehub.RecruME.models.Applicant;
 import gr.codehub.RecruME.models.Skill;
 import gr.codehub.RecruME.services.SkillService;
@@ -21,12 +22,12 @@ public class SkillController {
 
     @PostMapping("skill")
     public Skill newSkill(@RequestBody SkillDto skillDto){
-
+        return skillService.saveSkill(skillDto);
     }
 
     @PutMapping("skill/{id}")
     public  Skill updateSkill(@PathVariable int id, @RequestBody SkillDto skillDto){
-
+        return skillService.update(id,skillDto);
     }
 
     @DeleteMapping("skill/{id}")

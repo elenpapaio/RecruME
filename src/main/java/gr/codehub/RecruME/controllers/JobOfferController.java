@@ -1,5 +1,6 @@
 package gr.codehub.RecruME.controllers;
 
+import gr.codehub.RecruME.dtos.JobOfferDto;
 import gr.codehub.RecruME.models.Applicant;
 import gr.codehub.RecruME.models.JobOffer;
 import gr.codehub.RecruME.services.JobOfferService;
@@ -21,22 +22,28 @@ public class JobOfferController {
 
     @PostMapping("jobOffer")
     public JobOffer newJobOffer(@RequestBody JobOfferDto jobOfferDto){
+        return jobOfferService.save(jobOfferDto);
 
     }
 
     @GetMapping("jobOffers/year/{year}/month/{month}/day/{day}")
-    public List<JobOffer> getJobOffersByDate(@PathVariable String year,@PathVariable String month,@PathVariable String day){
-
+    public List<JobOffer> getJobOffersByDate(@PathVariable int year,@PathVariable int month,@PathVariable int day){
+        return jobOfferService.getJobOffersByDate(year, month, day);
     }
 
     @GetMapping("jobOffers/region/{region}")
     public List<JobOffer> getJobOffersByRegion(@PathVariable String region){
-
+        return jobOfferService.getJobOfferByRegion(region);
     }
 
     @GetMapping("jobOffers/title/{title}")
     public List<JobOffer> getJobOffersTitle(@PathVariable String title){
+        return jobOfferService.getJobOffersByTitle(title);
+    }
 
+    @GetMapping("jobOffers/skill/{skill_id}")
+    private List<JobOffer> getJobOffersBySkill(@PathVariable int skill_id){
+        return jobOfferService.getJobOfferBySkill(skill_id);
     }
 
     @GetMapping("jobOffers/report/week")
