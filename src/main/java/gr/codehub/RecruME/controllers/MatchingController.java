@@ -30,7 +30,7 @@ public class MatchingController {
 
     @PutMapping("matching/finalize/{id}")
     public Matching finalizeOne(@PathVariable int id) throws MatchingNotFoundException {
-        return matchingService.finalizeManualMatching(id);
+        return matchingService.finalizeMatching(id);
     }
 
     @DeleteMapping("matching/{id}")

@@ -55,7 +55,7 @@ public class MatchingService {
         return matchingRepo.save(matching);
     }
 
-    public Matching finalizeManualMatching(int id) throws MatchingNotFoundException {
+    public Matching finalizeMatching(int id) throws MatchingNotFoundException {
         Matching matching = matchingRepo.findById(id).get();
         if (matching == null) throw new MatchingNotFoundException("Matching id = "+id);
         matching.setFinalizedMatching(FinalizedMatching.YES);
