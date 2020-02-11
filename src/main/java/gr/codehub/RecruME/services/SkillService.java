@@ -2,12 +2,10 @@ package gr.codehub.RecruME.services;
 
 import gr.codehub.RecruME.dtos.SkillDto;
 import gr.codehub.RecruME.models.Skill;
-import gr.codehub.RecruME.models.SkillLevel;
 import gr.codehub.RecruME.repositories.SkillRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -24,10 +22,7 @@ public class SkillService {
             skillRepo.save(skill);
             return skill;
         }
-
-
     }
-
 
     public Skill findSkillByName(String name){
         return StreamSupport
@@ -38,7 +33,9 @@ public class SkillService {
     }
 
     public Skill update(int id, SkillDto skillDto) {
-        return skillRepo.findById(id).get();
+        Skill skill = skillRepo.findById(id).get();
+        skill.setSkillName(skillDto.getSkillName());
+        return skillRepo.save(skill);
     }
 
     public String deleteSkill(int id) {

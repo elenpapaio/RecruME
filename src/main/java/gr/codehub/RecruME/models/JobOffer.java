@@ -18,7 +18,7 @@ public class JobOffer {
     private int id;
 
     private String titleOfPosition;
-    //private String companyName;
+    private String companyName;
     private String region;
     private EducationLevel educationLevel;
     private Date postDate;
