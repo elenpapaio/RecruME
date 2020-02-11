@@ -37,5 +37,5 @@ public class Applicant {
                     @JoinColumn(name = "applicant_id")},
             inverseJoinColumns = {
                     @JoinColumn(name = "skill_id")})
-    private Set<Skill> applicantSkillSet = new HashSet<Skill>();
+    private Set<Skill> applicantSkillSet = new HashSet<>();
 }

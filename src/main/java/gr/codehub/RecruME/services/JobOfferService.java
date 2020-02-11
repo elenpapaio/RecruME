@@ -2,15 +2,21 @@ package gr.codehub.RecruME.services;
 
 import gr.codehub.RecruME.dtos.JobOfferDto;
 import gr.codehub.RecruME.dtos.SkillDto;
-import gr.codehub.RecruME.models.EducationLevel;
-import gr.codehub.RecruME.models.JobOffer;
-import gr.codehub.RecruME.models.Skill;
-import gr.codehub.RecruME.models.SkillLevel;
+import gr.codehub.RecruME.models.*;
 import gr.codehub.RecruME.repositories.JobOfferRepo;
 import gr.codehub.RecruME.repositories.SkillRepo;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,25 +32,62 @@ public class JobOfferService {
     public JobOffer save(JobOfferDto jobOfferDto) {
         JobOffer jobOffer = new JobOffer();
         jobOffer.setTitleOfPosition(jobOfferDto.getTitleOfPosition());
+        jobOffer.setCompanyName(jobOfferDto.getCompanyName());
         jobOffer.setEducationLevel(EducationLevel.getEnumFromString(jobOfferDto.getEducationLevel()));
         jobOffer.setSkillLevel(SkillLevel.getEnumFromString(jobOfferDto.getSkillLevel()));
         jobOffer.setRegion(jobOfferDto.getRegion());
         jobOffer.setPostDate(new Date(jobOfferDto.getPostYear(), jobOfferDto.getPostMonth() - 1, jobOfferDto.getPostDay() + 1));
+        SkillService skillService = new SkillService();
 
         for (Skill s : jobOfferDto.getSkills()) {
-            Skill skillWithId = this.findSkillByName(s.getSkillName());
+            Skill skillWithId = skillService.findSkillByName(s.getSkillName());
             jobOffer.getJobSkillSet().add(skillWithId);
         }
         return jobOffer;
     }
 
+
     public Skill findSkillByName(String name) {
-        return StreamSupport
-                .stream(skillRepo.findAll().spliterator(), false)
-                .filter(skill -> skill.getSkillName().equals(name))
-                .findFirst()
-                .get();
+        Skill skill = skillRepo.findFirstBySkillName(name);
+        if(skill == null) {
+            skill= new Skill();
+            skill.setSkillName(name);
+
+            Skill skill2 = skillRepo.save(skill);
+            return skill2;
+        }
+        return skill;
     }
+
+    public List<JobOffer> loadJobOffers() throws IOException {
+        File file = ResourceUtils.getFile("classpath:data for recrume.xlsx");
+        FileInputStream excelFile = new FileInputStream(file);
+        Workbook workbook = new XSSFWorkbook(excelFile);
+        Sheet datatypeSheet = workbook.getSheetAt(1);
+        Iterator<Row> row = datatypeSheet.iterator();
+        row.next();                                             //reads the headers
+        List<JobOffer> jobOffers = new ArrayList<>();
+        while (row.hasNext()) {
+            JobOffer jobOffer = new JobOffer();
+            Row currentRow = row.next();
+            Iterator<Cell> cellIterator = currentRow.iterator();
+            jobOffer.setCompanyName(cellIterator.next().getStringCellValue());
+            jobOffer.setTitleOfPosition(cellIterator.next().getStringCellValue());
+            jobOffer.setRegion(cellIterator.next().getStringCellValue());
+            jobOffer.setSkillLevel(SkillLevel.getEnumFromString(cellIterator.next().getStringCellValue().toUpperCase()));
+            Set<Skill> skillSet = new HashSet<>();
+            while (cellIterator.hasNext()) {
+                String skillName = cellIterator.next().getStringCellValue();
+                Skill skill= this.findSkillByName(skillName);
+                skillSet.add(skill);
+            }
+            jobOffer.setJobSkillSet(skillSet);
+            jobOffers.add(jobOffer);
+        }
+        jobOfferRepo.saveAll(jobOffers);
+        return jobOffers;
+    }
+
 
     public List<JobOffer> getJobOffersByDate(int year, int month, int day) {
         return StreamSupport
@@ -79,19 +122,6 @@ public class JobOfferService {
     }
 
 }
-//       JobOffer offer = new JobOffer();
-//            offer.getJobSkillSet().contains(Skill s);
-//            Set<Skill> hs = new HashSet<>();
-//            hs.contains();
-//            hs.stream();
-//
-//            return StreamSupport
-//                    .stream(jobOfferRepo.findAll().spliterator(), false)
-//                    .filter(jobOffer -> containsSkill(jobOffer.getJobSkillSet(),skill_id))
-//        }
-//
-//        private boolean containsSkill(Set<Skill> skillSet, int requestedSkillId){
-//            Skill skill =
-//        }
+
 
 

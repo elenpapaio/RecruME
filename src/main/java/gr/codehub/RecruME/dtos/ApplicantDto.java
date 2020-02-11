@@ -5,6 +5,7 @@ import gr.codehub.RecruME.models.Skill;
 import gr.codehub.RecruME.models.SkillLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;

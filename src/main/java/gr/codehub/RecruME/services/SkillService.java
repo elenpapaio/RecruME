@@ -4,17 +4,26 @@ import gr.codehub.RecruME.dtos.SkillDto;
 import gr.codehub.RecruME.models.Skill;
 import gr.codehub.RecruME.models.SkillLevel;
 import gr.codehub.RecruME.repositories.SkillRepo;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
-import java.util.Optional;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.StreamSupport;
 
 @Service
 public class SkillService {
 
     @Autowired
-    SkillRepo skillRepo;
+    private SkillRepo skillRepo;
 
     public Skill saveSkill(SkillDto skillDto) {
         Skill skill = findSkillByName(skillDto.getSkillName());
@@ -25,20 +34,10 @@ public class SkillService {
             return skill;
         }
 
-
     }
-
-
-    public Skill findSkillByName(String name){
-        return StreamSupport
-                .stream(skillRepo.findAll().spliterator(),false)
-                .filter(skill -> skill.getSkillName().equals(name))
-                .findFirst()
-                .get();
-    }
-
-    public Skill update(int id, SkillDto skillDto) {
-        return skillRepo.findById(id).get();
+    
+    public Skill updateSkill(int id, SkillDto skillDto) {
+       return skillRepo.findById(id).get();
     }
 
     public String deleteSkill(int id) {
@@ -46,10 +45,37 @@ public class SkillService {
         return "deleted";
     }
 
-//    public Skill update(int id, SkillDto skillDto) {
-//       Optional<Skill> skill = new Skill();
-//       skill = skillRepo.findById(id);
-//        skill.setSkillName(skillDto.getSkillName());
-//
-//    }
+    public Set<Skill> loadSkills() throws IOException {
+        File file = ResourceUtils.getFile("classpath:data for recrume.xlsx");
+        FileInputStream excelFile = new FileInputStream(file);
+        Workbook workbook = new XSSFWorkbook(excelFile);
+        Sheet datatypeSheet = workbook.getSheetAt(2);
+        Iterator<Row> row = datatypeSheet.iterator();
+        Set<Skill> skillSet = new HashSet<>();
+        row.next();
+        while(row.hasNext()){
+            Row currentRow = row.next();
+            Iterator<Cell> cellIterator = currentRow.iterator();
+            Cell nameCell = cellIterator.next();
+            Skill skill = this.findSkillByName(nameCell.getStringCellValue());
+            skillSet.add(skill);
+        }
+          return skillSet;
+
+    }
+
+    public Skill findSkillByName(String name) {
+        Skill skill = skillRepo.findFirstBySkillName(name);
+        if(skill == null) {
+            skill= new Skill();
+            skill.setSkillName(name);
+
+            Skill skill2 = skillRepo.save(skill);
+            return skill2;
+
+        }
+        return skill;
+    }
+
+
 }

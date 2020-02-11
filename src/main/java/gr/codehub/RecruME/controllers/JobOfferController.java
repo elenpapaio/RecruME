@@ -7,6 +7,7 @@ import gr.codehub.RecruME.services.JobOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -16,9 +17,9 @@ public class JobOfferController {
     @Autowired
     private JobOfferService jobOfferService;
 
-    @GetMapping("jobOffer/import")
-    public List<JobOffer> loadJobOffers(){
-        return null;
+    @GetMapping("jobOffers/import")
+    public List<JobOffer> loadJobOffers()throws IOException {
+        return jobOfferService.loadJobOffers();
     }
 
     @PostMapping("jobOffer")

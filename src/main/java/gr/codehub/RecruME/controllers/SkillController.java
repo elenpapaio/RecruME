@@ -7,7 +7,9 @@ import gr.codehub.RecruME.services.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("recrume/")
@@ -16,8 +18,8 @@ public class SkillController {
     private SkillService skillService;
 
     @GetMapping("skills/import")
-    public List<Skill> loadSkills(){
-        return  null;
+    public Set<Skill> loadSkills() throws IOException {
+        return skillService.loadSkills();
     }
 
     @PostMapping("skill")
@@ -27,7 +29,7 @@ public class SkillController {
 
     @PutMapping("skill/{id}")
     public  Skill updateSkill(@PathVariable int id, @RequestBody SkillDto skillDto){
-        return skillService.update(id,skillDto);
+        return skillService.updateSkill(id,skillDto);
     }
 
     @DeleteMapping("skill/{id}")

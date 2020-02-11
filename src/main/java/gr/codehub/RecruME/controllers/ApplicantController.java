@@ -6,6 +6,7 @@ import gr.codehub.RecruME.services.ApplicantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,8 +17,8 @@ public class ApplicantController {
     private ApplicantService applicantService;
 
     @GetMapping("applicants/import")
-    public List<Applicant> loadApplicants(){
-        return null;
+    public List<Applicant> loadApplicants() throws IOException {
+         return applicantService.loadApplicants();
     }
 
     @PostMapping("applicant")
