@@ -35,7 +35,7 @@ public class SkillService {
         }
 
     }
-    
+
     public Skill updateSkill(int id, SkillDto skillDto) {
        return skillRepo.findById(id).get();
     }
