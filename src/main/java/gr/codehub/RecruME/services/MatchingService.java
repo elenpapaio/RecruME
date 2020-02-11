@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class MatchingService {
@@ -22,6 +25,13 @@ public class MatchingService {
     @Autowired
     JobOfferRepo jobOfferRepo;
 
+    /**
+     * create a new manual matching in the database
+     * @param matchingDto
+     * @return the created manual matching
+     * @throws ApplicantNotFoundException when the given applicant does not exist
+     * @throws JobOfferNotFoundException when the given job offer does not exist
+     */
     public Matching save(MatchingDto matchingDto) throws ApplicantNotFoundException, JobOfferNotFoundException {
         Matching matching = new Matching();
         Applicant applicant = applicantRepo.findById(matchingDto.getApplicantId()).get();
@@ -32,11 +42,20 @@ public class MatchingService {
 
         matching.setApplicant(applicant);
         matching.setJobOffer(jobOffer);
-        matching.setMatchStatus(MatchStatus.MANUAL);
+        matching.setMatchStatus(MatchStatus.getEnumFromString(matchingDto.getMatchStatus()));
         matching.setFinalizedMatching(FinalizedMatching.NO);
         return matchingRepo.save(matching);
     }
 
+    /**
+     * edits an existing manual matching
+     * @param id of the manual matching to be edited
+     * @param matchingDto
+     * @return the edited manual matching
+     * @throws MatchingNotFoundException when the given manual matching does not exist
+     * @throws ApplicantNotFoundException when the given applicant does not exist
+     * @throws JobOfferNotFoundException when the given job offer does not exist
+     */
     public Matching updateOneMatching(int id, MatchingDto matchingDto)
             throws MatchingNotFoundException, ApplicantNotFoundException, JobOfferNotFoundException{
         Matching matching = matchingRepo.findById(id).get();
@@ -55,6 +74,12 @@ public class MatchingService {
         return matchingRepo.save(matching);
     }
 
+    /**
+     * puts matching in finalized state
+     * @param id of the matching to be finalized
+     * @return the finalized matching
+     * @throws MatchingNotFoundException when the given manual matching does not exist
+     */
     public Matching finalizeMatching(int id) throws MatchingNotFoundException {
         Matching matching = matchingRepo.findById(id).get();
         if (matching == null) throw new MatchingNotFoundException("Matching id = "+id);
@@ -63,9 +88,27 @@ public class MatchingService {
         return matchingRepo.save(matching);
     }
 
+    /**
+     * deletes a specific matching
+     * @param id of the matching to be deleted
+     * @return message informing that delete was successful
+     * @throws MatchingNotFoundException when the given manual matching does not exist
+     */
     public String deleteMatchingById(int id) throws MatchingNotFoundException {
         matchingRepo.deleteById(id);
         return "deleted";
+    }
+
+    /**
+     * finds a particular matching by match status (MANUAL, AUTOMATIC)
+     * @param status of the matching to be found
+     * @return a list of matchings with the particular status
+     */
+    public List<Matching> getMatchingByMatchingStatus(MatchStatus status) {
+        return StreamSupport
+                .stream(matchingRepo.findAll().spliterator(), false)
+                .filter(matching -> matching.getMatchStatus() == status)
+                .collect(Collectors.toList());
     }
 
 }

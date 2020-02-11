@@ -35,7 +35,7 @@ public class JobOfferService {
             Skill skillWithId = this.findSkillByName(s.getSkillName());
             jobOffer.getJobSkillSet().add(skillWithId);
         }
-        return jobOffer;
+        return jobOfferRepo.save(jobOffer);
     }
 
     public Skill findSkillByName(String name) {

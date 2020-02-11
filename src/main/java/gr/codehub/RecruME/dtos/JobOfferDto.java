@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class JobOfferDto {
     private String titleOfPosition;
+    //private String companyName;
     private String region;
     private String educationLevel;
     private int postYear;
