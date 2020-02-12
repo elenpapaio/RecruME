@@ -1,13 +1,10 @@
 package gr.codehub.RecruME.dtos;
 
-import gr.codehub.RecruME.models.EducationLevel;
 import gr.codehub.RecruME.models.Skill;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -24,5 +21,4 @@ public class JobOfferDto {
     private int postDay;
     private String skillLevel;
     private List<Skill> skills;
-
 }

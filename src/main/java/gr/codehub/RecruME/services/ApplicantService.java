@@ -1,7 +1,6 @@
 package gr.codehub.RecruME.services;
 
 import gr.codehub.RecruME.dtos.ApplicantDto;
-import gr.codehub.RecruME.exceptions.SkillNotFoundException;
 import gr.codehub.RecruME.models.*;
 import gr.codehub.RecruME.repositories.ApplicantRepo;
 import gr.codehub.RecruME.repositories.JobOfferRepo;
@@ -11,12 +10,10 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,7 +32,6 @@ public class ApplicantService {
     private JobOfferRepo jobOfferRepo;
     @Autowired
     private MatchingRepo matchingRepo;
-
 
     /**
      * save an applicant to the database
@@ -61,7 +57,6 @@ public class ApplicantService {
         checkForAutomaticMatching(applicantWithId);             // checking for possible automatic matching
         return applicantWithId;
     }
-
 
     public List<Applicant> getAllApplicants(){
         return StreamSupport
@@ -93,7 +88,6 @@ public class ApplicantService {
         matchingRepo.save(matching);
         return true;
     }
-
 
     public List<Applicant> getApplicantsByName(String lastname, String firstname) {
         return StreamSupport
@@ -132,7 +126,6 @@ public class ApplicantService {
         return applicants;
     }
 
-
     public List<Applicant> loadApplicants() throws IOException {
         File file = ResourceUtils.getFile("classpath:data for recrume.xlsx");
         FileInputStream excelFile = new FileInputStream(file);
@@ -163,7 +156,6 @@ public class ApplicantService {
         applicantRepo.saveAll(applicants);
         return applicants;
     }
-
 
     public Skill findSkillByName(String name) {
         Skill skill = skillRepo.findFirstBySkillName(name);

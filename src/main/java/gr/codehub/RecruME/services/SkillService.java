@@ -2,7 +2,6 @@ package gr.codehub.RecruME.services;
 
 import gr.codehub.RecruME.dtos.SkillDto;
 import gr.codehub.RecruME.models.Skill;
-import gr.codehub.RecruME.models.SkillLevel;
 import gr.codehub.RecruME.repositories.SkillRepo;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,7 +16,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.StreamSupport;
 
 @Service
 public class SkillService {
@@ -37,7 +35,9 @@ public class SkillService {
     }
 
     public Skill updateSkill(int id, SkillDto skillDto) {
-       return skillRepo.findById(id).get();
+        Skill skill = skillRepo.findById(id).get();
+        skill.setSkillName(skillDto.getSkillName());
+        return skillRepo.save(skill);
     }
 
     public String deleteSkill(int id) {
@@ -76,6 +76,5 @@ public class SkillService {
         }
         return skill;
     }
-
 
 }
