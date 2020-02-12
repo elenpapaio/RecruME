@@ -43,7 +43,7 @@ public class JobOfferService {
             Skill skillWithId = skillService.findSkillByName(s.getSkillName());
             jobOffer.getJobSkillSet().add(skillWithId);
         }
-        return jobOffer;
+        return jobOfferRepo.save(jobOffer);
     }
 
 

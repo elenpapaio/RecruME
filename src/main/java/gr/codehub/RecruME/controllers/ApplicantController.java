@@ -21,6 +21,11 @@ public class ApplicantController {
          return applicantService.loadApplicants();
     }
 
+    /**
+     * create an applicant and save in the database
+     * @param applicantDto
+     * @return saved applicant
+     */
     @PostMapping("applicant")
     public Applicant newApplicant(@RequestBody ApplicantDto applicantDto){
         return applicantService.save(applicantDto);
