@@ -93,6 +93,12 @@ public class ApplicantService {
         return true;
     }
 
+    public List<Applicant> getAllApplicants(){
+        return StreamSupport
+                .stream(applicantRepo.findAll().spliterator(),false)
+                .collect(Collectors.toList());
+    }
+
     public List<Applicant> getApplicantsByName(String lastname, String firstname) {
         return StreamSupport
                 .stream(applicantRepo.findAll().spliterator(),false)
@@ -110,7 +116,6 @@ public class ApplicantService {
                 .filter(applicant -> applicant.getRegion().equals(region))
                 .collect(Collectors.toList());
     }
-
 
     public List<Applicant> getApplicantsByDate(int yearFrom, int yearTo) {
         return StreamSupport

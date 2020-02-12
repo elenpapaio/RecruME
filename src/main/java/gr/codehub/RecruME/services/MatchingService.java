@@ -111,4 +111,29 @@ public class MatchingService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * retrieves all the proposed matchings
+     * @return a list of the proposed matchings (automatic, manual) - not finalized matchings
+     */
+    public List<Matching> getMatchingsNotFinalized(){
+        return StreamSupport
+                .stream(matchingRepo.findAll().spliterator(), false)
+                .filter(matching -> matching.getFinalizedMatching()==FinalizedMatching.NO)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * retrieves the most recent finalized matchings
+     * @param limit - sets a limit to the number of matchings to be retrieved
+     * @return a list of such matchings
+     */
+    public List<Matching> getMostRecentMatchingsFinalized(int limit){
+        return StreamSupport
+                .stream(matchingRepo.findAll().spliterator(), false)
+                .filter(matching -> matching.getFinalizedMatching()==FinalizedMatching.YES)
+                .sorted((m1,m2)-> m2.getFinalizedDate().compareTo(m1.getFinalizedDate()))
+                .limit(limit)
+                .collect(Collectors.toList());
+    }
+
 }
