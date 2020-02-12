@@ -33,6 +33,13 @@ public class ApplicantService {
     @Autowired
     private SkillRepo skillRepo;
 
+
+    /**
+     * save an applicant to the database
+     * checks for automatic matching using the method checkForAutomaticMatching
+     * @param applicantDto
+     * @return Applicant with given id
+     */
     public Applicant save(ApplicantDto applicantDto) {
         Applicant applicant = new Applicant();
         applicant.setFirstName(applicantDto.getFirstName());
