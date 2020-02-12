@@ -21,8 +21,13 @@ public class ApplicantController {
          return applicantService.loadApplicants();
     }
 
+    @GetMapping("applicants")
+    public List<Applicant> getAllApplicants(){
+        return applicantService.getAllApplicants();
+    }
+
     /**
-     * create an applicant and save in the database
+     * creates an applicant and save in the database
      * @param applicantDto
      * @return saved applicant
      */
@@ -35,10 +40,12 @@ public class ApplicantController {
     public List<Applicant> getApplicantsByName(@PathVariable String lastname,@PathVariable String firstname){
         return applicantService.getApplicantsByName(lastname,firstname);
     }
+
     @GetMapping("applicant/{id}")
     public Optional<Applicant> getApplicantById(@PathVariable int id){
         return applicantService.getApplicantById(id);
     }
+
     @GetMapping("applicants/region/{region}")
     public List<Applicant> getApplicantsByRegion(@PathVariable String region){
         return applicantService.getApplicantsByRegion(region);
