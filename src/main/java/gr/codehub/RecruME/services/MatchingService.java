@@ -95,8 +95,11 @@ public class MatchingService {
      * @throws MatchingNotFoundException when the given manual matching does not exist
      */
     public String deleteMatchingById(int id) throws MatchingNotFoundException {
-        matchingRepo.deleteById(id);
-        return "deleted";
+        if (matchingRepo.existsById(id)) {
+            matchingRepo.deleteById(id);
+            return "deleted";
+        }
+        throw new MatchingNotFoundException("Matching id = "+id);
     }
 
     /**

@@ -58,6 +58,10 @@ public class ApplicantService {
         return applicantWithId;
     }
 
+    /**
+     * retrieves all applicants
+     * @return a list of all applicants
+     */
     public List<Applicant> getAllApplicants(){
         return StreamSupport
                 .stream(applicantRepo.findAll().spliterator(),false)
@@ -153,7 +157,15 @@ public class ApplicantService {
             applicant.setApplicantSkillSet(skillSet);
             applicants.add(applicant);
         }
-        applicantRepo.saveAll(applicants);
+
+        List<Applicant> applicantsWithId =
+                StreamSupport
+                .stream(applicantRepo.saveAll(applicants).spliterator(), false)
+                .collect(Collectors.toList());
+
+        for( Applicant applicant: applicantsWithId){
+            checkForAutomaticMatching(applicant);
+        }
         return applicants;
     }
 
