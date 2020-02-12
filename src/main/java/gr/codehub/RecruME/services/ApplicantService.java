@@ -2,11 +2,10 @@ package gr.codehub.RecruME.services;
 
 import gr.codehub.RecruME.dtos.ApplicantDto;
 import gr.codehub.RecruME.exceptions.SkillNotFoundException;
-import gr.codehub.RecruME.models.Applicant;
-import gr.codehub.RecruME.models.EducationLevel;
-import gr.codehub.RecruME.models.Skill;
-import gr.codehub.RecruME.models.SkillLevel;
+import gr.codehub.RecruME.models.*;
 import gr.codehub.RecruME.repositories.ApplicantRepo;
+import gr.codehub.RecruME.repositories.JobOfferRepo;
+import gr.codehub.RecruME.repositories.MatchingRepo;
 import gr.codehub.RecruME.repositories.SkillRepo;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -32,6 +31,10 @@ public class ApplicantService {
     private ApplicantRepo applicantRepo;
     @Autowired
     private SkillRepo skillRepo;
+    @Autowired
+    private JobOfferRepo jobOfferRepo;
+    @Autowired
+    private MatchingRepo matchingRepo;
 
 
     /**
@@ -49,12 +52,14 @@ public class ApplicantService {
         applicant.setEducationLevel(EducationLevel.getEnumFromString(applicantDto.getEducationLevel()));
         applicant.setSkillLevel(SkillLevel.getEnumFromString(applicantDto.getSkillLevel()));
         applicant.setDob(new Date(applicantDto.getYearBirth(), applicantDto.getMonthBirth() - 1, applicantDto.getDayBirth() + 1));
-
+        // find the ids of the skills of the new applicant
         for (Skill s : applicantDto.getSkills()) {
             Skill skillWithId = this.findSkillByName(s.getSkillName());
             applicant.getApplicantSkillSet().add(skillWithId);
         }
-        return applicantRepo.save(applicant);
+        Applicant applicantWithId = applicantRepo.save(applicant);          // new applicant entered the system
+        checkForAutomaticMatching(applicantWithId);             // checking for possible automatic matching
+        return applicantWithId;
     }
 
 
@@ -63,6 +68,32 @@ public class ApplicantService {
                 .stream(applicantRepo.findAll().spliterator(),false)
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Checks for automatic matching by comparing the skillSet of all existing jobOffers
+     * with a particular applicant. If automatic matching is found, then it is saved in the database.
+     * @param applicant
+     * @return true if such a matching is found, false if no matching exists
+     */
+    public boolean checkForAutomaticMatching(Applicant applicant){
+        JobOffer jobOffer = StreamSupport
+                .stream(jobOfferRepo.findAll().spliterator(), false)
+                .filter(joboffer -> joboffer.getJobSkillSet().equals(applicant.getApplicantSkillSet()))
+                .findFirst()
+                .orElse(null);
+
+        if (jobOffer == null) return false;
+
+        // save automatic matching that was found
+        Matching matching = new Matching();
+        matching.setApplicant(applicant);
+        matching.setJobOffer(jobOffer);
+        matching.setMatchStatus(MatchStatus.AUTOMATIC);
+        matching.setFinalizedMatching(FinalizedMatching.NO);
+        matchingRepo.save(matching);
+        return true;
+    }
+
 
     public List<Applicant> getApplicantsByName(String lastname, String firstname) {
         return StreamSupport
