@@ -48,7 +48,13 @@ public class JobOfferService {
         return jobOfferRepo.save(jobOffer);
     }
 
-    public Skill findSkillByName(String name) {
+    /**
+     * returns the skill with the specific name if it does exist
+     * else creates it and returns it
+     * @param name
+     * @return Skill
+     */
+    private Skill findSkillByName(String name) {
         Skill skill = skillRepo.findFirstBySkillName(name);
         if(skill == null) {
             skill= new Skill();
