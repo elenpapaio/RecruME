@@ -137,7 +137,6 @@ public class ApplicantService {
     }
 
     /**
-     *
      * @param skill_id
      * @return a list of the applicants with a particular skill
      */
@@ -154,7 +153,7 @@ public class ApplicantService {
 
     /**
      * loads and imports the applicants from the excel file
-     * @return
+     * @return a list of the imported applicants
      * @throws IOException
      */
     public List<Applicant> loadApplicants() throws IOException {
