@@ -27,6 +27,11 @@ public class JobOfferService {
     @Autowired
     private SkillRepo skillRepo;
 
+    /**
+     * saves a job offer to the database
+     * @param jobOfferDto
+     * @return jobOffer with given id
+     */
     public JobOffer save(JobOfferDto jobOfferDto) {
         JobOffer jobOffer = new JobOffer();
         jobOffer.setTitleOfPosition(jobOfferDto.getTitleOfPosition());

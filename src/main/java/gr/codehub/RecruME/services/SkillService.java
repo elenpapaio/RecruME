@@ -81,9 +81,17 @@ public class SkillService {
     {
         List<Object[]>  skillList = skillRepo.getMostRequestedSkills();
         List<String> skills =  new ArrayList<>();
+           for(Object[] o : skillList)
+               skills.add((String)o[0]);
+        return skills;
+    }
+
+    public List<String> getMostOfferedSkills()
+    {
+        List<Object[]>  skillList = skillRepo.getMostOfferedSkills();
+        List<String> skills = new ArrayList<>();
         for(Object[] o : skillList)
             skills.add((String)o[0]);
         return skills;
     }
-
 }
