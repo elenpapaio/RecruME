@@ -48,8 +48,4 @@ public class JobOfferController {
         return jobOfferService.getJobOffersBySkill(skill_id);
     }
 
-    @GetMapping("jobOffers/report/week")
-    public List<JobOffer> saveJobOffers(){
-        return null;
-    }
 }

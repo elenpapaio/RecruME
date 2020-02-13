@@ -109,7 +109,6 @@ public class MatchingController {
     public String saveFinalizedMatchingsExcel() throws IOException {
         matchingService.saveFinalizedMatchingsExcel();
         return "excel report created";
-
     }
 
 }

@@ -32,7 +32,7 @@ public class MatchingService {
     JobOfferRepo jobOfferRepo;
 
     /**
-     * create a new manual matching in the database
+     * creates a new manual matching in the database
      * @param matchingDto
      * @return the created manual matching
      * @throws ApplicantNotFoundException when the given applicant does not exist

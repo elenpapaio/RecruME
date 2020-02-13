@@ -60,6 +60,11 @@ public class JobOfferService {
         return skill;
     }
 
+    /**
+     * loads and imports the job offers from the excel file
+     * @return
+     * @throws IOException
+     */
     public List<JobOffer> loadJobOffers() throws IOException {
         File file = ResourceUtils.getFile("classpath:data for recrume.xlsx");
         FileInputStream excelFile = new FileInputStream(file);
@@ -89,6 +94,13 @@ public class JobOfferService {
         return jobOffers;
     }
 
+    /**
+     * finds a list of job offers within a particular range related to their post dates
+     * @param year
+     * @param month
+     * @param day
+     * @return the list of these job offers
+     */
     public List<JobOffer> getJobOffersByDate(int year, int month, int day) {
         return StreamSupport
                 .stream(jobOfferRepo.findAll().spliterator(), false)
@@ -96,6 +108,11 @@ public class JobOfferService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * finds a list of job offers with a particular region
+     * @param region
+     * @return the list of such job offers
+     */
     public List<JobOffer> getJobOfferByRegion(String region) {
         return StreamSupport
                 .stream(jobOfferRepo.findAll().spliterator(), false)
@@ -103,6 +120,11 @@ public class JobOfferService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * finds a list of job offers with a particular title of position
+     * @param title of the wanted position
+     * @return the list of these job offers
+     */
     public List<JobOffer> getJobOffersByTitle(String title) {
         return StreamSupport
                 .stream(jobOfferRepo.findAll().spliterator(), false)
@@ -110,6 +132,11 @@ public class JobOfferService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * retrieves a list of job offers with a specific skill
+     * @param skill_id of the skill to be found
+     * @return
+     */
     public List<JobOffer> getJobOffersBySkill(int skill_id) {
         List<JobOffer> jobOffers = new ArrayList<>();
         for (JobOffer j : jobOfferRepo.findAll()) {

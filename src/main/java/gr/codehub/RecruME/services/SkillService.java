@@ -23,6 +23,11 @@ public class SkillService {
     @Autowired
     private SkillRepo skillRepo;
 
+    /**
+     * creates
+     * @param skillDto
+     * @return
+     */
     public Skill saveSkill(SkillDto skillDto) {
         Skill skill = findSkillByName(skillDto.getSkillName());
         if(skill!=null)

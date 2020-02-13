@@ -137,7 +137,6 @@ public class ApplicantService {
     }
 
     /**
-     *
      * @param skill_id
      * @return a list of the applicants with a particular skill
      */

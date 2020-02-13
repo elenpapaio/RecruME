@@ -65,8 +65,4 @@ public class ApplicantController {
         return applicantService.getApplicantsBySkill(skill_id);
     }
 
-    @GetMapping("applicants/report/week")
-    public List<Applicant> saveApplicants(){
-        return  null;
-    }
 }
