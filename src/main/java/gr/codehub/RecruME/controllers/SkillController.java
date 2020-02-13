@@ -3,6 +3,7 @@ package gr.codehub.RecruME.controllers;
 import gr.codehub.RecruME.dtos.SkillDto;
 import gr.codehub.RecruME.models.Applicant;
 import gr.codehub.RecruME.models.Skill;
+import gr.codehub.RecruME.services.JobOfferService;
 import gr.codehub.RecruME.services.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ import java.util.Set;
 public class SkillController {
     @Autowired
     private SkillService skillService;
+    @Autowired
+    private JobOfferService jobOfferService;
 
     @GetMapping("skills/import")
     public Set<Skill> loadSkills() throws IOException {
@@ -37,11 +40,11 @@ public class SkillController {
         return skillService.deleteSkill(id);
     }
 
-    @GetMapping("skills/mostRequired/20")
-    public List<Skill> getMostRequiredSkills20(){
-        return null;
-    }
 
+    @GetMapping("skills/mostRequesteded/5")
+    public List<Skill> getMostRequestedSkills(){
+        return jobOfferService.getMostRequestedSkills();
+    }
     @GetMapping("skills/mostOffered/20")
     public List<Skill> getMostOfferedSkills20(){
         return null;

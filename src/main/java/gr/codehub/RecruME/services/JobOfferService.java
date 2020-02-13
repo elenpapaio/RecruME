@@ -33,8 +33,8 @@ public class JobOfferService {
         JobOffer jobOffer = new JobOffer();
         jobOffer.setTitleOfPosition(jobOfferDto.getTitleOfPosition());
         jobOffer.setCompanyName(jobOfferDto.getCompanyName());
-        jobOffer.setEducationLevel(EducationLevel.getEnumFromString(jobOfferDto.getEducationLevel()));
-        jobOffer.setSkillLevel(SkillLevel.getEnumFromString(jobOfferDto.getSkillLevel()));
+        jobOffer.setEducationLevel(EducationLevel.getEnumFromString(jobOfferDto.getEducationLevel().toUpperCase()));
+        jobOffer.setSkillLevel(SkillLevel.getEnumFromString(jobOfferDto.getSkillLevel().toUpperCase()));
         jobOffer.setRegion(jobOfferDto.getRegion());
         jobOffer.setPostDate(new Date(jobOfferDto.getPostYear(), jobOfferDto.getPostMonth() - 1, jobOfferDto.getPostDay() + 1));
         SkillService skillService = new SkillService();
@@ -121,6 +121,37 @@ public class JobOfferService {
         return jobOffers;
     }
 
+    public List<Skill> getMostRequestedSkills(){
+
+               List<Integer> skillIds = jobOfferRepo.getMostRequestedSkills();
+    int d = (int)skillRepo.count();
+    int[][] howManyTimes= new int[d][2];
+
+//    List<Skill> skills= StreamSupport
+//            .stream(skillRepo.findAll().spliterator(), false)
+//            .collect(Collectors.toList());
+//
+    for(int i=0;i<d;i++){
+        skillRepo.
+        howManyTimes[i][1]=0;
+    }
+
+
+        int cnt=0;
+        for(SkillRepo s:skillRepo.findAll().getId());
+        for(JobOffer j:jobOfferRepo.findAll()){
+            for (Skill s : j.getJobSkillSet()) {
+
+
+                //skills.add(s);
+
+            }
+
+        return  null;
+
+
+
+    }
 }
 
 

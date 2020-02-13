@@ -50,7 +50,7 @@ public class MatchingService {
     /**
      * edits an existing manual matching
      * @param id of the manual matching to be edited
-     * @param matchingDto
+.     * @param matchingDto
      * @return the edited manual matching
      * @throws MatchingNotFoundException when the given manual matching does not exist
      * @throws ApplicantNotFoundException when the given applicant does not exist
