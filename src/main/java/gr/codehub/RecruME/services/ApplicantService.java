@@ -196,7 +196,7 @@ public class ApplicantService {
         return applicants;
     }
 
-    public Skill findSkillByName(String name) {
+    private Skill findSkillByName(String name) {
         Skill skill = skillRepo.findFirstBySkillName(name);
         if(skill == null) {
             skill= new Skill();
