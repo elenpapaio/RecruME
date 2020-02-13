@@ -36,8 +36,8 @@ public class JobOfferService {
         JobOffer jobOffer = new JobOffer();
         jobOffer.setTitleOfPosition(jobOfferDto.getTitleOfPosition());
         jobOffer.setCompanyName(jobOfferDto.getCompanyName());
-        jobOffer.setEducationLevel(EducationLevel.getEnumFromString(jobOfferDto.getEducationLevel()));
-        jobOffer.setSkillLevel(SkillLevel.getEnumFromString(jobOfferDto.getSkillLevel()));
+        jobOffer.setEducationLevel(EducationLevel.getEnumFromString(jobOfferDto.getEducationLevel().toUpperCase()));
+        jobOffer.setSkillLevel(SkillLevel.getEnumFromString(jobOfferDto.getSkillLevel().toUpperCase()));
         jobOffer.setRegion(jobOfferDto.getRegion());
         jobOffer.setPostDate(new Date(jobOfferDto.getPostYear(), jobOfferDto.getPostMonth() - 1, jobOfferDto.getPostDay() + 1));
 
@@ -147,6 +147,7 @@ public class JobOfferService {
         }
         return jobOffers;
     }
+
 
 }
 
