@@ -96,12 +96,12 @@ public class MatchingController {
     }
 
     /**
-     * retrieves the 20 most recent finalized matchings
+     * retrieves the most recent finalized matchings
      * @return a list of such matchings
      */
-    @GetMapping("matchings/Finalized/mostRecent/20")
-    public List<Matching> getMatchingsFinalized(){
-        return matchingService.getMostRecentMatchingsFinalized(20);
+    @GetMapping("matchings/Finalized/mostRecent/{limit}")
+    public List<Matching> getMatchingsFinalized(@PathVariable int limit){
+        return matchingService.getMostRecentMatchingsFinalized(limit);
     }
 
 }

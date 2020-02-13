@@ -35,10 +35,9 @@ public class JobOfferService {
         jobOffer.setSkillLevel(SkillLevel.getEnumFromString(jobOfferDto.getSkillLevel()));
         jobOffer.setRegion(jobOfferDto.getRegion());
         jobOffer.setPostDate(new Date(jobOfferDto.getPostYear(), jobOfferDto.getPostMonth() - 1, jobOfferDto.getPostDay() + 1));
-        SkillService skillService = new SkillService();
 
         for (Skill s : jobOfferDto.getSkills()) {
-            Skill skillWithId = skillService.findSkillByName(s.getSkillName());
+            Skill skillWithId = this.findSkillByName(s.getSkillName());
             jobOffer.getJobSkillSet().add(skillWithId);
         }
         return jobOfferRepo.save(jobOffer);

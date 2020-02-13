@@ -139,4 +139,15 @@ public class MatchingService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * retrieves all the finalized matchings
+     * @return a list of the finalized matchings
+     */
+    public List<Matching> getMatchingsFinalized(){
+        return StreamSupport
+                .stream(matchingRepo.findAll().spliterator(), false)
+                .filter(matching -> matching.getFinalizedMatching()==FinalizedMatching.YES)
+                .collect(Collectors.toList());
+    }
+
 }
