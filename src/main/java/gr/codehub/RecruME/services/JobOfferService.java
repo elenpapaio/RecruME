@@ -62,7 +62,7 @@ public class JobOfferService {
 
     /**
      * loads and imports the job offers from the excel file
-     * @return
+     * @return a list of the imported job offers
      * @throws IOException
      */
     public List<JobOffer> loadJobOffers() throws IOException {

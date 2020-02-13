@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.StreamSupport;
 
 @Service
 public class SkillService {
@@ -25,9 +24,9 @@ public class SkillService {
     private SkillRepo skillRepo;
 
     /**
-     * creates
+     * creates a new skill in the database
      * @param skillDto
-     * @return
+     * @return the created skill
      */
     public Skill saveSkill(SkillDto skillDto) {
         Skill skill = findSkillByName(skillDto.getSkillName());
@@ -40,17 +39,33 @@ public class SkillService {
 
     }
 
+    /**
+     * edits an existing skill
+     * @param id of the skill to be edited
+     * @param skillDto
+     * @return the edited skill
+     */
     public Skill updateSkill(int id, SkillDto skillDto) {
         Skill skill = skillRepo.findById(id).get();
         skill.setSkillName(skillDto.getSkillName());
         return skillRepo.save(skill);
     }
 
+    /**
+     * deletes a specific skill
+     * @param id of the skill to be deleted
+     * @return a message informing that delete was successful
+     */
     public String deleteSkill(int id) {
         skillRepo.deleteById(id);
         return "deleted";
     }
 
+    /**
+     * loads and imports the skills from the excel file
+     * @return a list of the imported skills
+     * @throws IOException
+     */
     public Set<Skill> loadSkills() throws IOException {
         File file = ResourceUtils.getFile("classpath:data for recrume.xlsx");
         FileInputStream excelFile = new FileInputStream(file);
@@ -83,28 +98,40 @@ public class SkillService {
         return skill;
     }
 
+    /**
+     * retrieves the most requested, from the job offers, skills
+     * @return
+     */
     public List<String> getMostRequestedSkills()
     {
-        List<Object[]>  skillList = skillRepo.getMostRequestedSkills();
+        List<Object[]> skillList = skillRepo.getMostRequestedSkills();
         List<String> skills =  new ArrayList<>();
-           for(Object[] o : skillList)
+           for(Object[] o: skillList)
                skills.add((String)o[0]);
         return skills;
     }
 
+    /**
+     * retrieves a list of the most offered, from the applicants, skills
+     * @return
+     */
     public List<String> getMostOfferedSkills()
     {
-        List<Object[]>  skillList = skillRepo.getMostOfferedSkills();
+        List<Object[]> skillList = skillRepo.getMostOfferedSkills();
         List<String> skills = new ArrayList<>();
-        for(Object[] o : skillList)
+        for(Object[] o: skillList)
             skills.add((String)o[0]);
         return skills;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> getUnmatchedSkills() {
         List<Object[]> skillList = skillRepo.getUnmatchedSkills();
         List<String> skills = new ArrayList<>();
-        for(Object[] o :skillList)
+        for(Object[] o:skillList)
             skills.add((String)o[0]);
         return skills;
     }
@@ -112,7 +139,7 @@ public class SkillService {
     public List<String> getRequestedUnmatchedSkills() {
         List<Object[]> skillList = skillRepo.getRequestedUnmatchedSkills();
         List<String> skills = new ArrayList<>();
-        for(Object[] o :skillList)
+        for(Object[] o:skillList)
             skills.add((String)o[0]);
         return skills;
     }

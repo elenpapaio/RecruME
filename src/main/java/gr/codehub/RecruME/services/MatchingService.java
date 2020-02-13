@@ -156,6 +156,10 @@ public class MatchingService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * provides reports of the finalized matchings to excel
+     * @throws IOException
+     */
     public void saveFinalizedMatchingsExcel() throws IOException {
         Workbook workbook = new XSSFWorkbook();
 
