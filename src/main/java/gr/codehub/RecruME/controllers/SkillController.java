@@ -47,13 +47,14 @@ public class SkillController {
         return skillService.getMostOfferedSkills();
     }
 
-    @GetMapping("skills/requested/unmatched")
-    public List<Skill> getUnmatchedSkills(){
-        return null;
+    @GetMapping("skills/unmatched")
+    public List<String> getUnmatchedSkills(){
+        return skillService.getUnmatchedSkills();
     }
 
-    @GetMapping("skills/report/week")
-    public List<Skill> saveSkills(){
-        return null;
+    @GetMapping("skills/requested/unmatched")
+    public List<String> getRequestedUnmatchedSkills() {
+        return skillService.getRequestedUnmatchedSkills();
     }
+
 }

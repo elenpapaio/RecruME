@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.StreamSupport;
 
 @Service
 public class SkillService {
@@ -91,6 +92,22 @@ public class SkillService {
         List<Object[]>  skillList = skillRepo.getMostOfferedSkills();
         List<String> skills = new ArrayList<>();
         for(Object[] o : skillList)
+            skills.add((String)o[0]);
+        return skills;
+    }
+
+    public List<String> getUnmatchedSkills() {
+        List<Object[]> skillList = skillRepo.getUnmatchedSkills();
+        List<String> skills = new ArrayList<>();
+        for(Object[] o :skillList)
+            skills.add((String)o[0]);
+        return skills;
+    }
+
+    public List<String> getRequestedUnmatchedSkills() {
+        List<Object[]> skillList = skillRepo.getRequestedUnmatchedSkills();
+        List<String> skills = new ArrayList<>();
+        for(Object[] o :skillList)
             skills.add((String)o[0]);
         return skills;
     }
