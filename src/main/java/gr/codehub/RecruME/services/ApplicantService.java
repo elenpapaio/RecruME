@@ -34,7 +34,7 @@ public class ApplicantService {
     private MatchingRepo matchingRepo;
 
     /**
-     * save an applicant to the database
+     * saves an applicant to the database
      * checks for automatic matching using the method checkForAutomaticMatching
      * @param applicantDto
      * @return Applicant with given id
@@ -93,6 +93,12 @@ public class ApplicantService {
         return true;
     }
 
+    /**
+     * finds applicants by a particular first name and last name
+     * @param lastname
+     * @param firstname
+     * @return the list of the applicants with the given first and last name
+     */
     public List<Applicant> getApplicantsByName(String lastname, String firstname) {
         return StreamSupport
                 .stream(applicantRepo.findAll().spliterator(), false)
@@ -104,6 +110,11 @@ public class ApplicantService {
         return applicantRepo.findById(id);
     }
 
+    /**
+     * finds a list of applicants with a particular region
+     * @param region
+     * @return the list of such applicants
+     */
     public List<Applicant> getApplicantsByRegion(String region) {
         return StreamSupport
                 .stream(applicantRepo.findAll().spliterator(), false)
@@ -111,6 +122,12 @@ public class ApplicantService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * finds a list of applicants within a particular age range
+     * @param yearFrom
+     * @param yearTo
+     * @return the list of these applicants
+     */
     public List<Applicant> getApplicantsByDate(int yearFrom, int yearTo) {
         return StreamSupport
                 .stream(applicantRepo.findAll().spliterator(), false)
@@ -119,6 +136,11 @@ public class ApplicantService {
                         collect(Collectors.toList());
     }
 
+    /**
+     *
+     * @param skill_id
+     * @return a list of the applicants with a particular skill
+     */
     public List<Applicant> getApplicantsBySkill(int skill_id) {
         List<Applicant> applicants = new ArrayList<>();
         for (Applicant a : applicantRepo.findAll()) {
@@ -130,6 +152,11 @@ public class ApplicantService {
         return applicants;
     }
 
+    /**
+     * loads and imports the applicants from the excel file
+     * @return
+     * @throws IOException
+     */
     public List<Applicant> loadApplicants() throws IOException {
         File file = ResourceUtils.getFile("classpath:data for recrume.xlsx");
         FileInputStream excelFile = new FileInputStream(file);

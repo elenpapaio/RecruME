@@ -37,14 +37,14 @@ public class SkillController {
         return skillService.deleteSkill(id);
     }
 
-    @GetMapping("skills/mostRequired/20")
-    public List<Skill> getMostRequiredSkills20(){
-        return null;
+    @GetMapping("skills/mostRequested/20")
+    public List<String> getMostRequestedSkills20(){
+        return skillService.getMostRequestedSkills();
     }
 
     @GetMapping("skills/mostOffered/20")
-    public List<Skill> getMostOfferedSkills20(){
-        return null;
+    public List<String> getMostOfferedSkills20(){
+        return skillService.getMostOfferedSkills();
     }
 
     @GetMapping("skills/requested/unmatched")
@@ -52,8 +52,4 @@ public class SkillController {
         return null;
     }
 
-    @GetMapping("skills/report/week")
-    public List<Skill> saveSkills(){
-        return null;
-    }
 }
