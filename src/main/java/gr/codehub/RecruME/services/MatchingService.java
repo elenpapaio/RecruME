@@ -40,10 +40,10 @@ public class MatchingService {
      */
     public Matching save(MatchingDto matchingDto) throws ApplicantNotFoundException, JobOfferNotFoundException {
         Matching matching = new Matching();
-        Applicant applicant = applicantRepo.findById(matchingDto.getApplicantId()).get();
+        Applicant applicant = applicantRepo.findById(matchingDto.getApplicantId()).orElse(null);
         if (applicant == null) throw new ApplicantNotFoundException("Applicant id = "+matchingDto.getApplicantId());
 
-        JobOffer jobOffer = jobOfferRepo.findById(matchingDto.getJobOfferId()).get();
+        JobOffer jobOffer = jobOfferRepo.findById(matchingDto.getJobOfferId()).orElse(null);
         if (jobOffer == null) throw new JobOfferNotFoundException("JobOffer id = "+matchingDto.getJobOfferId());
 
         matching.setApplicant(applicant);
@@ -64,12 +64,12 @@ public class MatchingService {
      */
     public Matching updateOneMatching(int id, MatchingDto matchingDto)
             throws MatchingNotFoundException, ApplicantNotFoundException, JobOfferNotFoundException{
-        Matching matching = matchingRepo.findById(id).get();
+        Matching matching = matchingRepo.findById(id).orElse(null);
         if (matching == null) throw new MatchingNotFoundException("Matching id = "+id);
-        Applicant applicant = applicantRepo.findById(matchingDto.getApplicantId()).get();
+        Applicant applicant = applicantRepo.findById(matchingDto.getApplicantId()).orElse(null);
         if (applicant == null) throw new ApplicantNotFoundException("Applicant id = "+matchingDto.getApplicantId());
 
-        JobOffer jobOffer = jobOfferRepo.findById(matchingDto.getJobOfferId()).get();
+        JobOffer jobOffer = jobOfferRepo.findById(matchingDto.getJobOfferId()).orElse(null);
         if (jobOffer == null) throw new JobOfferNotFoundException("JobOffer id = "+matchingDto.getJobOfferId());
 
         matching.setApplicant(applicant);
@@ -87,7 +87,7 @@ public class MatchingService {
      * @throws MatchingNotFoundException when the given manual matching does not exist
      */
     public Matching finalizeMatching(int id) throws MatchingNotFoundException {
-        Matching matching = matchingRepo.findById(id).get();
+        Matching matching = matchingRepo.findById(id).orElse(null);
         if (matching == null) throw new MatchingNotFoundException("Matching id = "+id);
         matching.setFinalizedMatching(FinalizedMatching.YES);
         matching.setFinalizedDate(new Date());
@@ -171,7 +171,7 @@ public class MatchingService {
 
         CellStyle headerStyle = workbook.createCellStyle();
         //headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
-        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        //headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         XSSFFont font = ((XSSFWorkbook) workbook).createFont();
         font.setFontName("Arial");

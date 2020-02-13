@@ -47,7 +47,7 @@ public class SkillService {
      * @throws SkillNotFoundException when the given skill does not exist
      */
     public Skill updateSkill(int id, SkillDto skillDto) throws SkillNotFoundException{
-        Skill skill = skillRepo.findById(id).get();
+        Skill skill = skillRepo.findById(id).orElse(null);
         if (skill == null) throw new SkillNotFoundException("Skill id = "+id);
         skill.setSkillName(skillDto.getSkillName());
         return skillRepo.save(skill);
