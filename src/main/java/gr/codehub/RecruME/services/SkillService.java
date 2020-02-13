@@ -1,6 +1,7 @@
 package gr.codehub.RecruME.services;
 
 import gr.codehub.RecruME.dtos.SkillDto;
+import gr.codehub.RecruME.exceptions.SkillNotFoundException;
 import gr.codehub.RecruME.models.Skill;
 import gr.codehub.RecruME.repositories.SkillRepo;
 import org.apache.poi.ss.usermodel.Cell;
@@ -36,7 +37,6 @@ public class SkillService {
             skillRepo.save(skill);
             return skill;
         }
-
     }
 
     /**
@@ -44,9 +44,11 @@ public class SkillService {
      * @param id of the skill to be edited
      * @param skillDto
      * @return the edited skill
+     * @throws SkillNotFoundException when the given skill does not exist
      */
-    public Skill updateSkill(int id, SkillDto skillDto) {
+    public Skill updateSkill(int id, SkillDto skillDto) throws SkillNotFoundException{
         Skill skill = skillRepo.findById(id).get();
+        if (skill == null) throw new SkillNotFoundException("Skill id = "+id);
         skill.setSkillName(skillDto.getSkillName());
         return skillRepo.save(skill);
     }
@@ -55,10 +57,14 @@ public class SkillService {
      * deletes a specific skill
      * @param id of the skill to be deleted
      * @return a message informing that delete was successful
+     * @throws SkillNotFoundException when the given skill does not exist
      */
-    public String deleteSkill(int id) {
-        skillRepo.deleteById(id);
-        return "deleted";
+    public String deleteSkill(int id) throws SkillNotFoundException {
+        if (skillRepo.existsById(id)){
+            skillRepo.deleteById(id);
+            return "deleted";
+        }
+        throw new SkillNotFoundException("Skill id = "+id);
     }
 
     /**

@@ -1,6 +1,7 @@
 package gr.codehub.RecruME.controllers;
 
 import gr.codehub.RecruME.dtos.SkillDto;
+import gr.codehub.RecruME.exceptions.SkillNotFoundException;
 import gr.codehub.RecruME.models.Applicant;
 import gr.codehub.RecruME.models.Skill;
 import gr.codehub.RecruME.services.SkillService;
@@ -28,12 +29,12 @@ public class SkillController {
     }
 
     @PutMapping("skill/{id}")
-    public  Skill updateSkill(@PathVariable int id, @RequestBody SkillDto skillDto){
+    public  Skill updateSkill(@PathVariable int id, @RequestBody SkillDto skillDto) throws SkillNotFoundException {
         return skillService.updateSkill(id,skillDto);
     }
 
     @DeleteMapping("skill/{id}")
-    public String deleteSkillById(@PathVariable int id){
+    public String deleteSkillById(@PathVariable int id) throws SkillNotFoundException {
         return skillService.deleteSkill(id);
     }
 
