@@ -21,6 +21,10 @@ public class ApplicantController {
          return applicantService.loadApplicants();
     }
 
+    /**
+     * retrieves all applicants
+     * @return a list of all applicants
+     */
     @GetMapping("applicants")
     public List<Applicant> getAllApplicants(){
         return applicantService.getAllApplicants();

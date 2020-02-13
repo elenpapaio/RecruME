@@ -1,7 +1,6 @@
 package gr.codehub.RecruME.services;
 
 import gr.codehub.RecruME.dtos.JobOfferDto;
-import gr.codehub.RecruME.dtos.SkillDto;
 import gr.codehub.RecruME.models.*;
 import gr.codehub.RecruME.repositories.JobOfferRepo;
 import gr.codehub.RecruME.repositories.SkillRepo;
@@ -19,7 +18,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -37,15 +35,13 @@ public class JobOfferService {
         jobOffer.setSkillLevel(SkillLevel.getEnumFromString(jobOfferDto.getSkillLevel().toUpperCase()));
         jobOffer.setRegion(jobOfferDto.getRegion());
         jobOffer.setPostDate(new Date(jobOfferDto.getPostYear(), jobOfferDto.getPostMonth() - 1, jobOfferDto.getPostDay() + 1));
-        SkillService skillService = new SkillService();
 
         for (Skill s : jobOfferDto.getSkills()) {
-            Skill skillWithId = skillService.findSkillByName(s.getSkillName());
+            Skill skillWithId = this.findSkillByName(s.getSkillName());
             jobOffer.getJobSkillSet().add(skillWithId);
         }
         return jobOfferRepo.save(jobOffer);
     }
-
 
     public Skill findSkillByName(String name) {
         Skill skill = skillRepo.findFirstBySkillName(name);
@@ -87,7 +83,6 @@ public class JobOfferService {
         jobOfferRepo.saveAll(jobOffers);
         return jobOffers;
     }
-
 
     public List<JobOffer> getJobOffersByDate(int year, int month, int day) {
         return StreamSupport

@@ -35,7 +35,9 @@ public class SkillService {
     }
 
     public Skill updateSkill(int id, SkillDto skillDto) {
-       return skillRepo.findById(id).get();
+        Skill skill = skillRepo.findById(id).get();
+        skill.setSkillName(skillDto.getSkillName());
+        return skillRepo.save(skill);
     }
 
     public String deleteSkill(int id) {
@@ -74,6 +76,5 @@ public class SkillService {
         }
         return skill;
     }
-
 
 }
