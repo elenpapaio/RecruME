@@ -11,6 +11,7 @@ import gr.codehub.RecruME.services.MatchingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -102,6 +103,13 @@ public class MatchingController {
     @GetMapping("matchings/Finalized/mostRecent/{limit}")
     public List<Matching> getMatchingsFinalized(@PathVariable int limit){
         return matchingService.getMostRecentMatchingsFinalized(limit);
+    }
+
+    @GetMapping("excelReport/finalizedMatchings")
+    public String saveFinalizedMatchingsExcel() throws IOException {
+        matchingService.saveFinalizedMatchingsExcel();
+        return "excel report created";
+
     }
 
 }

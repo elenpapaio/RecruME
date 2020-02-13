@@ -8,9 +8,15 @@ import gr.codehub.RecruME.models.*;
 import gr.codehub.RecruME.repositories.ApplicantRepo;
 import gr.codehub.RecruME.repositories.JobOfferRepo;
 import gr.codehub.RecruME.repositories.MatchingRepo;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -148,6 +154,61 @@ public class MatchingService {
                 .stream(matchingRepo.findAll().spliterator(), false)
                 .filter(matching -> matching.getFinalizedMatching()==FinalizedMatching.YES)
                 .collect(Collectors.toList());
+    }
+
+    public void saveFinalizedMatchingsExcel() throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+
+        Sheet sheet = workbook.createSheet("FinalizedMatchings");
+        sheet.setColumnWidth(0, 6000);
+        sheet.setColumnWidth(1, 4000);
+
+        Row header = sheet.createRow(0);
+
+        CellStyle headerStyle = workbook.createCellStyle();
+        //headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+        font.setFontName("Arial");
+        font.setFontHeightInPoints((short) 11);
+        font.setBold(true);
+        headerStyle.setFont(font);
+
+        Cell headerCell = header.createCell(0);
+        headerCell.setCellValue("Applicant name");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(1);
+        headerCell.setCellValue("Title of position");
+        headerCell.setCellStyle(headerStyle);
+
+        CellStyle style = workbook.createCellStyle();
+        style.setWrapText(true);
+
+        List<Matching> matchings = this.getMatchingsFinalized();
+
+        int currentRowNumber = 1;
+        for (Matching m: matchings){
+            Row row = sheet.createRow(currentRowNumber);
+
+            Cell cell = row.createCell(0);
+            cell.setCellValue(m.getApplicant().getFirstName() + ' ' + m.getApplicant().getLastName());
+            cell.setCellStyle(style);
+
+            Cell cell2 = row.createCell(1);
+            cell2.setCellValue(m.getJobOffer().getTitleOfPosition());
+            currentRowNumber++;
+        }
+
+        File newExcelFile = new File("matchingReports.xlsx");
+//        String path = currDir.getAbsolutePath();
+//        String fileLocation = path.substring(0, path.length() - 1) + "temp.xlsx";
+
+        FileOutputStream outputStream = new FileOutputStream(newExcelFile);
+        workbook.write(outputStream);
+        workbook.close();
+        outputStream.close();
     }
 
 }
