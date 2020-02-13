@@ -41,9 +41,9 @@ public class SkillController {
     }
 
 
-    @GetMapping("skills/mostRequesteded/5")
-    public List<Skill> getMostRequestedSkills(){
-        return jobOfferService.getMostRequestedSkills();
+    @GetMapping("skills/mostRequesteded/20")
+    public List<String> getMostRequestedSkills(){
+        return skillService.getMostRequestedSkills();
     }
     @GetMapping("skills/mostOffered/20")
     public List<Skill> getMostOfferedSkills20(){
@@ -55,8 +55,5 @@ public class SkillController {
         return null;
     }
 
-    @GetMapping("skills/report/week")
-    public List<Skill> saveSkills(){
-        return null;
-    }
+
 }
